@@ -1,3 +1,12 @@
+import streamlit as st # type: ignore
+import pandas as pd # type: ignore
+import requests # type: ignore 
+import pickle
+
+# Load the processed data and similarity matrix
+with open('movie_data.pkl', 'rb') as file:
+    movies, cosine_sim = pickle.load(file)
+
 # Function to get movie recommendations
 def get_recommendations(title, cosine_sim=cosine_sim):
     idx = movies[movies['title'] == title].index[0]
@@ -19,6 +28,7 @@ def fetch_poster(movie_id):
 
 # Streamlit UI
 st.title("Movie Recommendation System")
+st.write("This is running on Streamlit’s web server!")
 
 selected_movie = st.selectbox("Select a movie:", movies['title'].values)
 
@@ -36,4 +46,4 @@ if st.button('Recommend'):
                 poster_url = fetch_poster(movie_id)
                 with col:
                     st.image(poster_url, width=130)
-                    st.write(movie_title) how to opean acode with sevice please 
+                    st.write(movie_title)
